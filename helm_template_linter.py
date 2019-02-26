@@ -32,6 +32,10 @@ if __name__ == '__main__':
     # Split each rendered yaml template by their '---' headers
     yaml_files = cp.stdout.decode().split('---\n')[1:]
 
+    # Create output directory
+    outdir = os.path.join(os.path.dirname(__file__), 'rendered')
+    os.makedirs(outdir, exist_ok=True)
+
     # Write each rendered yaml template to a local file for linting
     filenames = []
     for i, yaml_lines in enumerate(yaml_files):
@@ -39,9 +43,8 @@ if __name__ == '__main__':
         filename = yaml_lines.split('\n', 1)[0].split(' ')[-1]
         # Get only filename at the end of the file path
         filename = 'rendered-' + os.path.basename(os.path.normpath(filename))
-        #filename = f'template{i}.yaml'
+        filename = os.path.join(outdir, filename)
         filenames.append(filename)
-        print(f'Writing {filename} ...')
 
         with open(filename, 'w') as yf:
             yaml_lines = '---\n' + yaml_lines

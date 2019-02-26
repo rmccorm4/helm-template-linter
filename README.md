@@ -1,20 +1,21 @@
-# Helm Tools
+# Helm YAML Template Linter
 
-## Helm YAML Template Linter
 
-**Work in Progress**
-
-I wanted to lint some YAML templates for a Helm chart, but `yamllint` doesn't
+I wanted to lint some YAML templates for a
+[Helm](https://helm.sh/docs/developing_charts/) chart, but `yamllint` doesn't
 play nicely with the template syntax. So I wrote a small script to render
-the templates and the run `yamllint` on those instead.
+the templates and then run `yamllint` on those instead.
 
-### Usage
+**This is a Work in Progress**
+
+## Usage
 
 This will:
 
 1. Render all templates in the helm chart
-2. Save them locally as `rendered-<template-filename>.yaml`
-3. Run `yamllint` on each rendered template and output the results.
+2. Create a `rendered` directory to store files neatly.
+3. Save them locally as `rendered/rendered-<template-filename>.yaml`
+4. Run `yamllint` on each rendered template and output the results.
     - The linter was relaxed to make lines over length 80 just a warning
       instead of an error, due to potentially long template subsitutions.
 
@@ -24,20 +25,9 @@ python3 helm_template_linter.py <CHART>
 
 Example linting errors:
 
-```console
+```bash
 $ python3 helm_template_linter.py stable/wordpress
 
-Writing rendered-nomadic-boxer-credentials-test ...
-Writing rendered-nomadic-boxer-mariadb-test-4funy ...
-Writing rendered-secrets.yaml ...
-Writing rendered-secrets.yaml ...
-Writing rendered-master-configmap.yaml ...
-Writing rendered-tests.yaml ...
-Writing rendered-pvc.yaml ...
-Writing rendered-master-svc.yaml ...
-Writing rendered-svc.yaml ...
-Writing rendered-deployment.yaml ...
-Writing rendered-master-statefulset.yaml ...
 rendered-nomadic-boxer-credentials-test
   11:3      error    wrong indentation: expected 4 but found 2  (indentation)
   28:81     warning  line too long (148 > 80 characters)  (line-length)
