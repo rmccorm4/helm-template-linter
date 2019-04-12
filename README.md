@@ -6,8 +6,6 @@ I wanted to lint some YAML templates for a
 play nicely with the template syntax. So I wrote a small script to render
 the templates and then run `yamllint` on those instead.
 
-**This is a Work in Progress**
-
 ## Usage
 
 This will:
